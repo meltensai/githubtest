@@ -1,6 +1,6 @@
-package com.project.member2.entity;
+package com.project.member2.member.entity;
 
-import com.project.member2.dto.MemberDTO;
+import com.project.member2.member.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

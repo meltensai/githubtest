@@ -1,10 +1,9 @@
-package com.project.member2.service;
+package com.project.member2.member.service;
 
-import com.project.member2.dto.MemberDTO;
-import com.project.member2.entity.MemberEntity;
-import com.project.member2.repository.MemberRepository;
+import com.project.member2.member.dto.MemberDTO;
+import com.project.member2.member.entity.MemberEntity;
+import com.project.member2.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

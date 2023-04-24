@@ -1,14 +1,13 @@
-package com.project.member2.Controller;
+package com.project.member2.member.Controller;
 
-import com.project.member2.dto.MemberDTO;
-import com.project.member2.service.MemberService;
+import com.project.member2.member.dto.MemberDTO;
+import com.project.member2.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -97,6 +96,11 @@ public class MemberController {
 //            return "no";
 //        }
         return checkResult;
+    }
+
+    @PostMapping("/member/board")
+    public String gotoboard() {
+        return "boardmain";
     }
  }
 

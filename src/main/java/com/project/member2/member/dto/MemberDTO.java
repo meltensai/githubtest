@@ -1,6 +1,6 @@
-package com.project.member2.dto;
+package com.project.member2.member.dto;
 
-import com.project.member2.entity.MemberEntity;
+import com.project.member2.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
