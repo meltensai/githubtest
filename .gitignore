@@ -44,5 +44,4 @@ out/
 out
 gen
 
-.gradle
-build
+build.gradle
