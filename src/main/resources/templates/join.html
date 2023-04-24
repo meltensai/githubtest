@@ -3,14 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Join</title>
+<!--  jquery cdn 주소-->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <!-- action = form에 작성한 것을 어디로 보낼지 설정 가능-->
 <form action="/member/join" method="post">
-  이메일: <input type="text" name="memberEmail"> <br>
+  이메일: <input type="text" name="memberEmail" id="memberEmail" onblur="emailCheck()">
+  <span id="check-result"></span><br>
   비밀번호: <input type="password" name="memberPassword"><br>
   이름: <input type="text" name="memberName"><br>
   <input type="submit" value="회원가입">
 </form>
 </body>
+<script th:inline="javascript" >
+  const emailCheck = () => {
+    const email = document.getElementById("memberEmail").value;
+    const check_result = document.getElementById("check-result");
+    console.log("입력값: "+email);
+    $.ajax({
+    //   요청방식: post , url : "email-check", 데이터: 이메일
+      type: "post",
+      url: "/member/email-check",
+      data:{
+        "memberEmail": email
+      },
+      success: function (res) {
+        console.log("성공: ", res)
+        if(res=="ok") {
+          console.log("사용 가능한 이메일입니다.")
+          check_result.style.color="red";
+          check_result.innerHTML="※사용 가능한 이메일입니다.";
+        } else {
+          console.log("중복된 이메일입니다.")
+          check_result.style.color="red";
+          check_result.innerHTML="※중복된 이메일입니다.";
+        }
+      },
+      error: function (err) {
+        console.log("에러발생: ", err);
+      }
+    })
+  }
+</script>
 </html>

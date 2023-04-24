@@ -47,7 +47,7 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/member/")
+    @GetMapping("/member")
     public String findAll(Model model) {
         List<MemberDTO> memberDTOList = memberService.findAll();
         model.addAttribute("memberList", memberDTOList);
@@ -59,6 +59,44 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findByID(id);
         model.addAttribute("member", memberDTO);
         return "detail";
+    }
+
+    @GetMapping("/member/update")
+    public String updateForm(HttpSession session, Model model) {
+        String myEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.updateForm(myEmail);
+        model.addAttribute("updateMember", memberDTO);
+        return "update";
+    }
+
+    @PostMapping("/member/update")
+    public String update(@ModelAttribute MemberDTO memberDTO) {
+        memberService.update(memberDTO);
+        return "redirect:/member/" + memberDTO.getId();
+    }
+
+    @GetMapping("/member/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        memberService.deleteById(id);
+        return "redirect:/member";
+    }
+
+    @GetMapping("/member/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "index";
+    }
+
+    @PostMapping("/member/email-check")
+    public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail) {
+        System.out.println("memberEmail = " + memberEmail);
+        String checkResult = memberService.emailCheck(memberEmail);
+//        if(checkResult!= null) {
+//            return "ok";
+//        } else {
+//            return "no";
+//        }
+        return checkResult;
     }
  }
 

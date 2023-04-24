@@ -16,6 +16,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
     public void save(MemberDTO memberDTO) {
         //repository의 save메서드 호출 (조건. entity 객체를 넘겨줘야됨)
         //1.  dto -> entity 변환
@@ -31,10 +32,10 @@ public class MemberService {
         2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
          */
         Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
-        if(byMemberEmail.isPresent()) {
+        if (byMemberEmail.isPresent()) {
             //해당 이메일의 회원 정보가 있다
             MemberEntity memberEntity = byMemberEmail.get();
-            if(memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
+            if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
                 //비밀번호 일치
                 //entity -> dto 변환 후 리턴
                 MemberDTO dto = MemberDTO.toMemberDTO(memberEntity);
@@ -50,7 +51,7 @@ public class MemberService {
     public List<MemberDTO> findAll() {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for(MemberEntity memberEntity: memberEntityList) {
+        for (MemberEntity memberEntity : memberEntityList) {
             memberDTOList.add(MemberDTO.toMemberDTO(memberEntity));
 //            MemberDTO memberDTO = MemberDTO.toMemberDTO(memberEntity);
 //            memberDTOList.add(memberDTO);
@@ -60,7 +61,7 @@ public class MemberService {
 
     public MemberDTO findByID(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if(optionalMemberEntity.isPresent()) {
+        if (optionalMemberEntity.isPresent()) {
 //            MemberEntity memberEntity = optionalMemberEntity.get();
 //            MemberDTO memberDTO = MemberDTO.toMemberDTO(memberEntity);
 //            return memberDTO;
@@ -69,4 +70,30 @@ public class MemberService {
             return null;
         }
     }
-}
+
+    public MemberDTO updateForm(String myEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(myEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        } else {
+            return null;
+        }
+    }
+
+    public void update(MemberDTO memberDTO) {//그냥 memberentity쓰면 insert창으로 넘어가짐
+        memberRepository.save(MemberEntity.toupdatetoMemberEntity(memberDTO));
+    }
+
+    public void deleteById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public String emailCheck(String memberEmail) {
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberEmail);
+        if (byMemberEmail.isPresent()) {
+            return null;
+        } else {
+            return "ok";
+        }
+    }
+    }
