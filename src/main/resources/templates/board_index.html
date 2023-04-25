@@ -6,11 +6,17 @@
 </head>
 <body>
 <button onclick="board_write()">글작성</button>
+<button onclick="board_list()">글목록</button>
+<a href="/index"><button>메인으로</button></a>
 </body>
 <script>
     const board_write = () => {
         location.href="/board/write"
     }
     //function board_write() {} 랑 똑같음
+
+    const board_list = () => {
+        location.href="/board/list"
+    }
 </script>
 </html>
